@@ -29,3 +29,44 @@ so that I can start to play.
 Given a non-negative integer
 When putting bombs on board 
 Then result should be bomb counts equal the size of board
+
+
+## US3
+As a player 
+I want to see that all the rules to play the game are working 
+so that I can start to play. 
+
+## UAT3.1
+Given select cell 
+When no bomb 
+Then result should be true
+
+## UAT3.2
+Given select cell 
+When no bomb 
+Then cell should be revealed
+
+## UAT3.3
+Given select cell 
+When no winner yet
+Then method should return no winner
+
+## UAT3.4
+Given select cell 
+When with bomb
+Then method should return false 
+
+## UAT3.5
+Given get the revealed cell number 
+When played a bit of game
+Then method should return number of revealed cells 
+
+## US4
+As a player 
+I want to see after I reveal all the cells
+so that game will finishe and there will be a winner. 
+
+## UAT4
+Given select all empty cells
+When not selecting bomb cell
+Then result should be that I win the game
