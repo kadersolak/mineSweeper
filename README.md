@@ -70,3 +70,13 @@ so that game will finishe and there will be a winner.
 Given select all empty cells
 When not selecting bomb cell
 Then result should be that I win the game
+
+## US5
+As a player 
+I want toflag the cell if there is a bomb
+so that game will continue. 
+
+## UAT5
+Given flag the cell with flag
+When not hit the bomb
+Then result should that game will continue
