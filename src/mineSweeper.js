@@ -58,6 +58,17 @@ module.exports.init =function init(sizeOfBoard) {
    }
    return bombCount;
  }
+
+ module.exports.getRevealedCount =function getRevealedCount(sizeOfBoard,board) {
+   var revealedCount=0;
+   for (var i = 0; i < sizeOfBoard; i++) {
+     for (var j = 0; j < sizeOfBoard; j++) {
+       if(board[i][j].revealed){ 
+         revealedCount++;}
+     }
+   }
+   return revealedCount;
+ }
  module.exports.returnCellView =function returnCellView(currentCell) {
    var retVal=" ";
   if(currentCell.flagged) 
@@ -72,7 +83,34 @@ module.exports.init =function init(sizeOfBoard) {
   }
   return retVal;
  }
+ function checkHitTheBomb(currentCell) {
+   if (currentCell.bomb && currentCell.revealed ) return false;
+   return true;
+ }
+ module.exports.checkWinner =function checkWinner(sizeOfBoard,board) {
+   var bombsAndRevealed=this.getRevealedCount(sizeOfBoard,board)+this.getBombsCount(sizeOfBoard,board);
+   var boardElementCount=Math.imul(sizeOfBoard,sizeOfBoard);
+   if(bombsAndRevealed===boardElementCount) {
+     console.log("----- I cant belive you really did it -----");
+     return true;
+   }
+   else return false;
+ };
 
+ module.exports.makeAMove =function makeAMove(currentCell, sizeOfBoard,board) {
+   this.reveal(currentCell);
+   retVal=true;
+   if(!checkHitTheBomb(currentCell)) {
+     hitBomb=true;
+     console.log("BOOOM.... You hit the bomb DUDE ");
+     retVal=false;
+   }else{
+     if(currentCell.bombAround===0) 
+       this.showCellsAround(currentCell.row,currentCell.col,sizeOfBoard,board);
+   }
+   this.printBoard(sizeOfBoard,board);
+   return retVal;
+}
  module.exports.assignNumbersAroundBombs =function assignNumbersAroundBombs(i, j, sizeOfBoard, board) {
    for(var row = maxVal(0, i-1); row <= minVal(i+1, sizeOfBoard-1); row++){
      for(var col = maxVal(0, j-1); col <= minVal(j+1, sizeOfBoard-1); col++){
@@ -93,6 +131,12 @@ module.exports.init =function init(sizeOfBoard) {
    }
  };
 
+ module.exports.flag =function flag(currentCell) {
+   if (!currentCell.revealed) {
+       currentCell.flagged = !currentCell.flagged;
+       return currentCell.flagged;
+   }
+ }
  module.exports.addAllBombs =function addAllBombs(sizeOfBoard,board) {
    var totalBombs = sizeOfBoard;
    while (totalBombs !== 0) {
@@ -114,3 +158,32 @@ module.exports.init =function init(sizeOfBoard) {
   }
   else return false;
 };
+
+module.exports.playAuto =function playAuto(sizeOfBoard) {
+   board=this.init(sizeOfBoard);
+   this.addAllBombs(sizeOfBoard,board);
+   this.printBoard();
+   console.log("Bot play mode activated");
+   while ( !hitBomb && !this.checkWinner(sizeOfBoard,board)) {
+     currentCell=getRandomCell(sizeOfBoard,board);
+     var row=currentCell.row+1;
+     var col=currentCell.col+1;
+     console.log("Bot move row: "+row+" column:"+col);
+     this.makeAMove(currentCell,sizeOfBoard,board);
+   }
+   return "GAME OVER"
+ };
+ 
+ 
+ function getRandomCell(sizeOfBoard,board){
+   var row = getRandomInt(sizeOfBoard);
+   var col = getRandomInt(sizeOfBoard);
+   var checkRevealed=true;
+   while(checkRevealed){
+      row = getRandomInt(sizeOfBoard);
+      col = getRandomInt(sizeOfBoard);
+      currentCell=board[row][col];
+      checkRevealed=currentCell.revealed;
+   }
+  return currentCell;
+ };

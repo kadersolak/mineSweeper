@@ -3,7 +3,7 @@
   "format": "markdown",
   "allfiles": false,
   "ignoreerrors": true,
-  "filepattern":"(.(?<!\.test))\.js$",
+  "filepattern": "(.(?<!\\.test))\\.js$",
   "dirpattern": ".+",
   "maxfiles": 256,
   "maxcyc": 4,
