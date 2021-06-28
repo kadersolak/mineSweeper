@@ -10,7 +10,6 @@ TODO : mineSweeper
 - TODO
 - IN PROGRESS
 - DONE
-
 ## US1
 As a player 
 I want to see that the board for mine swapper game is imitialized with length that I want.
@@ -20,3 +19,13 @@ so that I can determine how hard will be the game.
 Given a non-negative integer
 When this will describe the size of board
 Then result should be the empty board
+
+## US2
+As a player 
+I want to see that the bombs are initilized in a board. 
+so that I can start to play. 
+
+## UAT2
+Given a non-negative integer
+When putting bombs on board 
+Then result should be bomb counts equal the size of board
