@@ -1,17 +1,13 @@
-var mineSweeper = require('../src/mineSweeper'); 
-
-describe("mineSweeper function", () => {
-test("Case 1", () => {
-    expect(mineSweeper.mineSweeper(1)).toBeTruthy();
+var mine = require('../src/mineSweeper'); 
+describe("US1 - Check if board prepared correctly ", () => {
+  const size=5;
+  const board=mine.buildBoardCells(size);
+  test("Expect the board get initialiazed with custom sizes", () => {
+    expect(mine.init(size)).toEqual(board);
   });
 
-test("Case 2", () => {
-    expect(mineSweeper.mineSweeper(1)).toBeFalsy();
+  test("Expect TRUE after print the empty board", () => {
+    expect(mine.printBoard(size,board)).toBeTruthy();
   });
-
-test("Case 3", () => {
-    const expected = 'expected!';
-    expect(mineSweeper.mineSweeper(1)).toBe(expected);
-  });
-
 });
+
