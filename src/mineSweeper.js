@@ -1,6 +1,7 @@
  
 module.exports = {};
 const Cell = require('./cell.js')
+var hitBomb;
 module.exports.init =function init(sizeOfBoard) {
    var board=this.buildBoardCells(sizeOfBoard);
    hitBomb = false;
@@ -21,7 +22,7 @@ module.exports.init =function init(sizeOfBoard) {
  };
 
  module.exports.printBoard =function printBoard(sizeOfBoard,board) {
-   midRow = `+${'-+'.repeat(sizeOfBoard)}\n`;
+   var midRow = `+${'-+'.repeat(sizeOfBoard)}\n`;
    var boardToPrint=midRow;
    for (var i = 0; i < sizeOfBoard; i++) {
      boardToPrint=boardToPrint+"|";
@@ -99,7 +100,7 @@ module.exports.init =function init(sizeOfBoard) {
 
  module.exports.makeAMove =function makeAMove(currentCell, sizeOfBoard,board) {
    this.reveal(currentCell);
-   retVal=true;
+   var retVal=true;
    if(!checkHitTheBomb(currentCell)) {
      hitBomb=true;
      console.log("BOOOM.... You hit the bomb DUDE ");
@@ -160,12 +161,12 @@ module.exports.init =function init(sizeOfBoard) {
 };
 
 module.exports.playAuto =function playAuto(sizeOfBoard) {
-   board=this.init(sizeOfBoard);
+   var board=this.init(sizeOfBoard);
    this.addAllBombs(sizeOfBoard,board);
    this.printBoard();
    console.log("Bot play mode activated");
    while ( !hitBomb && !this.checkWinner(sizeOfBoard,board)) {
-     currentCell=getRandomCell(sizeOfBoard,board);
+     var currentCell=getRandomCell(sizeOfBoard,board);
      var row=currentCell.row+1;
      var col=currentCell.col+1;
      console.log("Bot move row: "+row+" column:"+col);
